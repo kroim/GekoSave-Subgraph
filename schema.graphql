@@ -1,0 +1,54 @@
+type Event @entity {
+  id: ID!
+  timestamp: BigInt!
+  txhash: String!
+  logIndex: BigInt!
+
+  collection: Bytes!
+  tokenId: BigInt!
+  name: String!
+  userAddress: Bytes!
+}
+
+type Item @entity {
+  id: ID!
+  timestamp: BigInt!
+  txhash: String!
+  logIndex: BigInt!
+  
+  collection: Bytes!
+  tokenId: BigInt!
+  uri: String!
+  creator: Bytes!
+  owner: Bytes!  
+}
+
+type Auction @entity {
+  id: ID!
+  timestamp: BigInt!
+  txhash: String!
+  logIndex: BigInt!
+  
+  collection: Bytes!
+  tokenId: BigInt!
+  startTime: BigInt!
+  endTime: BigInt!
+  startPrice: BigInt!
+  creator: Bytes!
+  owner: Bytes!
+  active: Boolean!
+}
+
+type Bid @entity {
+  id: ID!
+  timestamp: BigInt!
+  txhash: String!
+  logIndex: BigInt!
+  
+  collection: Bytes!
+  tokenId: BigInt!
+  auctionId: BigInt!
+  from: Bytes!
+  bidPrice: BigInt!  
+}
+

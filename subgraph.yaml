@@ -1,0 +1,56 @@
+specVersion: 0.0.2
+description: GekoSaveNFT subgraph data on Binance.
+repository: 
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: GekoSaveNFT # NFT contract 
+    network: rinkeby
+    source:
+      address: '0x596eDbDB128C0C7ad954c16679eD7BeD1a6fB41a'
+      abi: GekoSaveNFT
+      startBlock: 9383924
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      file: ./src/mappings/GekoSaveNFT.ts
+      entities:
+        - Item
+      abis:
+        - name: GekoSaveNFT
+          file: ./abis/GekoSaveNFT.json
+      eventHandlers:
+        - event: PunkMint(indexed address,(uint256,address,address,string,address[]))
+          handler: handlePunkMint        
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer
+  - kind: ethereum/contract
+    name: GekoSaveAuction #Auction Contract
+    network: rinkeby
+    source:
+      address: '0xD844a40aAC48417Dbe6Fe3df798C2d6108009849'
+      abi: GekoSaveAuction
+      startBlock: 9383626
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      file: ./src/mappings/GekoSaveAuction.ts
+      entities:
+        - Auction
+        - Bid
+      abis:
+        - name: GekoSaveAuction
+          file: ./abis/GekoSaveAuction.json
+      eventHandlers:
+        - event: BidSuccess(address,uint256,uint256,uint256)
+          handler: handleBidSuccess 
+        - event: AuctionCreated((uint256,address,uint256,uint256,uint256,uint256,address,address,bool))
+          handler: handleAuctionCreated 
+        - event: AuctionCanceled(uint256)
+          handler: handleAuctionCanceled 
+        - event: AuctionFinalized(address,(uint256,address,uint256,uint256,uint256,uint256,address,address,bool))
+          handler: handleAuctionFinalized        
+          
