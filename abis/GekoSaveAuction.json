@@ -620,14 +620,22 @@
                 "internalType": "address",
                 "name": "_devAddress",
                 "type": "address"
-            },
+            }
+        ],
+        "name": "setDevAddress",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
             {
                 "internalType": "address",
                 "name": "_managerAddress",
                 "type": "address"
             }
         ],
-        "name": "setAddresses",
+        "name": "setManagerAddress",
         "outputs": [],
         "stateMutability": "nonpayable",
         "type": "function"
