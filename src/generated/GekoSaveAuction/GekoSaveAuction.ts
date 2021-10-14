@@ -926,36 +926,62 @@ export class RenounceOwnershipCall__Outputs {
   }
 }
 
-export class SetAddressesCall extends ethereum.Call {
-  get inputs(): SetAddressesCall__Inputs {
-    return new SetAddressesCall__Inputs(this);
+export class SetDevAddressCall extends ethereum.Call {
+  get inputs(): SetDevAddressCall__Inputs {
+    return new SetDevAddressCall__Inputs(this);
   }
 
-  get outputs(): SetAddressesCall__Outputs {
-    return new SetAddressesCall__Outputs(this);
+  get outputs(): SetDevAddressCall__Outputs {
+    return new SetDevAddressCall__Outputs(this);
   }
 }
 
-export class SetAddressesCall__Inputs {
-  _call: SetAddressesCall;
+export class SetDevAddressCall__Inputs {
+  _call: SetDevAddressCall;
 
-  constructor(call: SetAddressesCall) {
+  constructor(call: SetDevAddressCall) {
     this._call = call;
   }
 
   get _devAddress(): Address {
     return this._call.inputValues[0].value.toAddress();
   }
+}
 
-  get _managerAddress(): Address {
-    return this._call.inputValues[1].value.toAddress();
+export class SetDevAddressCall__Outputs {
+  _call: SetDevAddressCall;
+
+  constructor(call: SetDevAddressCall) {
+    this._call = call;
   }
 }
 
-export class SetAddressesCall__Outputs {
-  _call: SetAddressesCall;
+export class SetManagerAddressCall extends ethereum.Call {
+  get inputs(): SetManagerAddressCall__Inputs {
+    return new SetManagerAddressCall__Inputs(this);
+  }
 
-  constructor(call: SetAddressesCall) {
+  get outputs(): SetManagerAddressCall__Outputs {
+    return new SetManagerAddressCall__Outputs(this);
+  }
+}
+
+export class SetManagerAddressCall__Inputs {
+  _call: SetManagerAddressCall;
+
+  constructor(call: SetManagerAddressCall) {
+    this._call = call;
+  }
+
+  get _managerAddress(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+}
+
+export class SetManagerAddressCall__Outputs {
+  _call: SetManagerAddressCall;
+
+  constructor(call: SetManagerAddressCall) {
     this._call = call;
   }
 }
