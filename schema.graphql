@@ -52,3 +52,20 @@ type Bid @entity {
   bidPrice: BigInt!  
 }
 
+type Price @entity {
+  id: ID!
+  timestamp: BigInt!
+  txhash: String!
+  logIndex: BigInt!
+
+  value: BigInt!
+}
+
+type Paused @entity {
+  id: ID!
+  timestamp: BigInt!
+  txhash: String!
+  logIndex: BigInt!
+
+  value: Boolean!
+}
