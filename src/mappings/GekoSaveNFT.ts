@@ -1,6 +1,7 @@
 /* eslint-disable prefer-const */
-import { Item, Event} from '../generated/schema'
-import { PunkMint, Transfer } from '../generated/GekoSaveNFT/GekoSaveNFT'
+import { Item, Event, Price, Paused} from '../generated/schema'
+import { PunkMint, Transfer, SetPrice, ChangePaused, UpdateHolders } from '../generated/GekoSaveNFT/GekoSaveNFT'
+import { Bytes } from '@graphprotocol/graph-ts'
 
 export function handleTransfer(event: Transfer): void
 {
@@ -38,4 +39,26 @@ export function handlePunkMint(event: PunkMint): void {
 	eventItem.name = "Minted"
 	eventItem.userAddress = event.params._punk.creator
 	eventItem.save()
+}
+
+export function handlePrice(event: SetPrice): void {
+	let entityId = event.address.toHex() + '-' + event.block.timestamp.toString();
+	let entity = new Price(entityId);
+	entity.timestamp = event.block.timestamp;
+	entity.txhash = event.transaction.hash.toHexString();
+	entity.logIndex = event.transactionLogIndex;
+
+	entity.value = event.params._value;
+	entity.save();
+}
+
+export function handlePaused(event: ChangePaused): void {
+	let entityId = event.address.toHex() + '-' + event.block.timestamp.toString();
+	let entity = new Paused(entityId);
+	entity.timestamp = event.block.timestamp;
+	entity.txhash = event.transaction.hash.toHexString();
+	entity.logIndex = event.transactionLogIndex;
+
+	entity.value = event.params._value;
+	entity.save();
 }
