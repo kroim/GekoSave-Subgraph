@@ -5,9 +5,9 @@
   "license": "GPL-3.0-or-later",
   "scripts": {
     "codegen": "graph codegen --output-dir src/generated/",
-    "auth": "graph auth https://api.thegraph.com/deploy/ $GRAPH_ACCESS_TOKEN",
+    "auth": "graph auth https://api.thegraph.com/deploy/ 5b41f082b1f544ff94c59610d95b37b4",
     "build": "graph build",
-    "deploy": "graph deploy kroim/gekosave-rinkeby --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/ --debug"    
+    "deploy": "graph deploy kroim/gekosavegekochill --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/ --debug"    
   },
   "devDependencies": {
     "@amxx/graphprotocol-utils": "0.0.6-2",
