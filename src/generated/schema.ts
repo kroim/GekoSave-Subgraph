@@ -441,3 +441,137 @@ export class Bid extends Entity {
     this.set("bidPrice", Value.fromBigInt(value));
   }
 }
+
+export class Price extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id !== null, "Cannot save Price entity without an ID");
+    assert(
+      id.kind == ValueKind.STRING,
+      "Cannot save Price entity with non-string ID. " +
+        'Considering using .toHex() to convert the "id" to a string.'
+    );
+    store.set("Price", id.toString(), this);
+  }
+
+  static load(id: string): Price | null {
+    return store.get("Price", id) as Price | null;
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get timestamp(): BigInt {
+    let value = this.get("timestamp");
+    return value.toBigInt();
+  }
+
+  set timestamp(value: BigInt) {
+    this.set("timestamp", Value.fromBigInt(value));
+  }
+
+  get txhash(): string {
+    let value = this.get("txhash");
+    return value.toString();
+  }
+
+  set txhash(value: string) {
+    this.set("txhash", Value.fromString(value));
+  }
+
+  get logIndex(): BigInt {
+    let value = this.get("logIndex");
+    return value.toBigInt();
+  }
+
+  set logIndex(value: BigInt) {
+    this.set("logIndex", Value.fromBigInt(value));
+  }
+
+  get value(): BigInt {
+    let value = this.get("value");
+    return value.toBigInt();
+  }
+
+  set value(value: BigInt) {
+    this.set("value", Value.fromBigInt(value));
+  }
+}
+
+export class Paused extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id !== null, "Cannot save Paused entity without an ID");
+    assert(
+      id.kind == ValueKind.STRING,
+      "Cannot save Paused entity with non-string ID. " +
+        'Considering using .toHex() to convert the "id" to a string.'
+    );
+    store.set("Paused", id.toString(), this);
+  }
+
+  static load(id: string): Paused | null {
+    return store.get("Paused", id) as Paused | null;
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get timestamp(): BigInt {
+    let value = this.get("timestamp");
+    return value.toBigInt();
+  }
+
+  set timestamp(value: BigInt) {
+    this.set("timestamp", Value.fromBigInt(value));
+  }
+
+  get txhash(): string {
+    let value = this.get("txhash");
+    return value.toString();
+  }
+
+  set txhash(value: string) {
+    this.set("txhash", Value.fromString(value));
+  }
+
+  get logIndex(): BigInt {
+    let value = this.get("logIndex");
+    return value.toBigInt();
+  }
+
+  set logIndex(value: BigInt) {
+    this.set("logIndex", Value.fromBigInt(value));
+  }
+
+  get value(): boolean {
+    let value = this.get("value");
+    return value.toBoolean();
+  }
+
+  set value(value: boolean) {
+    this.set("value", Value.fromBoolean(value));
+  }
+}
