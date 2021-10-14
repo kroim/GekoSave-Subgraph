@@ -1,4 +1,4 @@
-specVersion: 0.0.2
+specVersion: 0.0.3
 description: GekoSaveNFT subgraph data on Binance.
 repository: 
 schema:
@@ -6,11 +6,11 @@ schema:
 dataSources:
   - kind: ethereum/contract
     name: GekoSaveNFT # NFT contract 
-    network: rinkeby
+    network: bsc
     source:
-      address: '0x596eDbDB128C0C7ad954c16679eD7BeD1a6fB41a'
+      address: '0x6AA3E05B01C1D9F9428FAe39be9059F53aa72699'
       abi: GekoSaveNFT
-      startBlock: 9383924
+      startBlock: 11767000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -26,13 +26,17 @@ dataSources:
           handler: handlePunkMint        
         - event: Transfer(indexed address,indexed address,indexed uint256)
           handler: handleTransfer
+        - event: SetPrice(uint256)
+          handler: handlePrice
+        - event: ChangePaused(bool)
+          handler: handlePaused
   - kind: ethereum/contract
     name: GekoSaveAuction #Auction Contract
-    network: rinkeby
+    network: bsc
     source:
-      address: '0xD844a40aAC48417Dbe6Fe3df798C2d6108009849'
+      address: '0x1Dd9404799A5DBba5D6F6918c7AC98070Deda840'
       abi: GekoSaveAuction
-      startBlock: 9383626
+      startBlock: 11767000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
