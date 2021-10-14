@@ -62,6 +62,24 @@ export class ApprovalForAll__Params {
   }
 }
 
+export class ChangePaused extends ethereum.Event {
+  get params(): ChangePaused__Params {
+    return new ChangePaused__Params(this);
+  }
+}
+
+export class ChangePaused__Params {
+  _event: ChangePaused;
+
+  constructor(event: ChangePaused) {
+    this._event = event;
+  }
+
+  get _value(): boolean {
+    return this._event.parameters[0].value.toBoolean();
+  }
+}
+
 export class OwnershipTransferred extends ethereum.Event {
   get params(): OwnershipTransferred__Params {
     return new OwnershipTransferred__Params(this);
@@ -190,30 +208,19 @@ export class UpdateHolders__Params {
   }
 }
 
-export class GekoSaveNFT__punksResult {
+export class GekoSaveNFT__checkHoldersResult {
   value0: BigInt;
-  value1: Address;
-  value2: Address;
-  value3: string;
+  value1: boolean;
 
-  constructor(
-    value0: BigInt,
-    value1: Address,
-    value2: Address,
-    value3: string
-  ) {
+  constructor(value0: BigInt, value1: boolean) {
     this.value0 = value0;
     this.value1 = value1;
-    this.value2 = value2;
-    this.value3 = value3;
   }
 
   toMap(): TypedMap<string, ethereum.Value> {
     let map = new TypedMap<string, ethereum.Value>();
     map.set("value0", ethereum.Value.fromUnsignedBigInt(this.value0));
-    map.set("value1", ethereum.Value.fromAddress(this.value1));
-    map.set("value2", ethereum.Value.fromAddress(this.value2));
-    map.set("value3", ethereum.Value.fromString(this.value3));
+    map.set("value1", ethereum.Value.fromBoolean(this.value1));
     return map;
   }
 }
@@ -255,6 +262,62 @@ export class GekoSaveNFT extends ethereum.SmartContract {
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(value[0].toString());
+  }
+
+  checkHolders(param0: Address): GekoSaveNFT__checkHoldersResult {
+    let result = super.call(
+      "checkHolders",
+      "checkHolders(address):(uint256,bool)",
+      [ethereum.Value.fromAddress(param0)]
+    );
+
+    return new GekoSaveNFT__checkHoldersResult(
+      result[0].toBigInt(),
+      result[1].toBoolean()
+    );
+  }
+
+  try_checkHolders(
+    param0: Address
+  ): ethereum.CallResult<GekoSaveNFT__checkHoldersResult> {
+    let result = super.tryCall(
+      "checkHolders",
+      "checkHolders(address):(uint256,bool)",
+      [ethereum.Value.fromAddress(param0)]
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(
+      new GekoSaveNFT__checkHoldersResult(
+        value[0].toBigInt(),
+        value[1].toBoolean()
+      )
+    );
+  }
+
+  claimedAccount(param0: Address): boolean {
+    let result = super.call(
+      "claimedAccount",
+      "claimedAccount(address):(bool)",
+      [ethereum.Value.fromAddress(param0)]
+    );
+
+    return result[0].toBoolean();
+  }
+
+  try_claimedAccount(param0: Address): ethereum.CallResult<boolean> {
+    let result = super.tryCall(
+      "claimedAccount",
+      "claimedAccount(address):(bool)",
+      [ethereum.Value.fromAddress(param0)]
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBoolean());
   }
 
   createTokenURI(tokenId: BigInt): string {
@@ -525,41 +588,6 @@ export class GekoSaveNFT extends ethereum.SmartContract {
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(value[0].toBoolean());
-  }
-
-  punks(param0: BigInt): GekoSaveNFT__punksResult {
-    let result = super.call(
-      "punks",
-      "punks(uint256):(uint256,address,address,string)",
-      [ethereum.Value.fromUnsignedBigInt(param0)]
-    );
-
-    return new GekoSaveNFT__punksResult(
-      result[0].toBigInt(),
-      result[1].toAddress(),
-      result[2].toAddress(),
-      result[3].toString()
-    );
-  }
-
-  try_punks(param0: BigInt): ethereum.CallResult<GekoSaveNFT__punksResult> {
-    let result = super.tryCall(
-      "punks",
-      "punks(uint256):(uint256,address,address,string)",
-      [ethereum.Value.fromUnsignedBigInt(param0)]
-    );
-    if (result.reverted) {
-      return new ethereum.CallResult();
-    }
-    let value = result.value;
-    return ethereum.CallResult.fromValue(
-      new GekoSaveNFT__punksResult(
-        value[0].toBigInt(),
-        value[1].toAddress(),
-        value[2].toAddress(),
-        value[3].toString()
-      )
-    );
   }
 
   rewardBalance(): BigInt {
